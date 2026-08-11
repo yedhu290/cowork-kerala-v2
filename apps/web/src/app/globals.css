@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* Public site palette (marketing pages) */
+@theme {
+    --color-primary-50: #ebffd8;
+    --color-primary-100: #ceeab3;
+    --color-primary-200: #98cba8;
+    --color-primary-300: #6dab9c;
+    --color-primary-400: #4d898b;
+    --color-primary-500: #3b6874;
+    --color-primary-600: #2f4858;
+    --color-primary-700: #76a04e;
+}
+
+/* Admin dashboard palette (shadcn/ui semantic tokens, used under /admin) */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 172 45% 32%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 142 71% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 172 45% 32%;
+
+    --chart-1: 172 45% 32%;
+    --chart-2: 142 71% 45%;
+    --chart-3: 262 83% 58%;
+    --chart-4: 202 71% 45%;
+    --chart-5: 43 100% 50%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+    font-family: 'Manrope', sans-serif;
+}
+
+.max-w-default {
+    max-width: 80vw;
+}
+
+/* Button styles used across the public marketing site */
+.btn-primary {
+    @apply rounded-full bg-[#CFEAB1] px-5 py-2.5 text-xs font-medium text-zinc-900 hover:bg-[#bfda9f] transition-colors tracking-wide cursor-pointer uppercase md:px-6 md:py-3 md:text-sm inline-block;
+}
+
+.btn-dark {
+    @apply rounded-full bg-zinc-900 text-white px-5 py-2.5 text-xs font-medium tracking-wide hover:bg-zinc-800 transition-colors cursor-pointer uppercase md:px-6 md:py-3 md:text-sm inline-block;
+}
+
+.btn-contact {
+    @apply inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-zinc-900 hover:bg-zinc-100 transition-colors cursor-pointer;
+}

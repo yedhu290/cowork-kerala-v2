@@ -1,0 +1,15 @@
+# Nixpacks Build Configuration
+# https://nixpacks.com/docs/configuration/file
+
+[phases.setup]
+# Bun runtime
+nixPkgs = ["bun"]
+
+[phases.install]
+cmds = ["bun install --frozen-lockfile"]
+
+[phases.build]
+cmds = ["bun build src/index.ts --outdir ./dist --target bun"]
+
+[start]
+cmd = "bun src/index.ts"

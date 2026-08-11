@@ -1,0 +1,18 @@
+{
+  "name": "cowork",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CoWork Kerala monorepo - Next.js frontend (public site + /admin dashboard) and Node.js/Express API",
+  "scripts": {
+    "install:all": "cd apps/web && pnpm install && cd ../server && bun install",
+    "dev:web": "cd apps/web && pnpm run dev",
+    "dev:server": "cd apps/server && bun run dev",
+    "dev": "pnpm run dev:web & pnpm run dev:server & wait",
+    "build:web": "cd apps/web && pnpm run build",
+    "build:server": "cd apps/server && bun run build",
+    "build": "pnpm run build:web && pnpm run build:server",
+    "start:web": "cd apps/web && pnpm run start",
+    "start:server": "cd apps/server && bun run start",
+    "lint:web": "cd apps/web && pnpm run lint"
+  }
+}
