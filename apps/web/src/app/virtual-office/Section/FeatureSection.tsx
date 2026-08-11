@@ -7,7 +7,7 @@ const features = [
         desc: 'Get a premium office address in a prime location without the cost of physical space. Enhance your brand image and build trust with clients.',
         tag: 'PROFESSIONAL PRESENCE',
         bg: 'bg-[#F3F1EB]',
-        tagBg: 'bg-[#D4E7A6] text-[#1A2818]',
+        tagBg: 'bg-[#D4E7A6] text-brand-dark',
     },
     {
         title: 'WORK FROM ANYWHERE',
@@ -15,7 +15,7 @@ const features = [
         desc: 'Operate your business remotely while maintaining a strong presence in prime markets. Stay connected with clients worldwide without being tied to a physical office.',
         tag: 'GLOBAL ACCESSIBILITY',
         bg: 'bg-[#D4E7A6]',
-        tagBg: 'bg-[#1A2818] text-white',
+        tagBg: 'bg-brand-dark text-white',
     },
     {
         title: 'SMART BUSINESS SOLUTION',
@@ -23,7 +23,7 @@ const features = [
         desc: "A virtual office gives you all the benefits of a prime business address and mail services at a fraction of the cost of a physical office. It's perfect for startups, freelancers, and growing businesses looking to maintain professionalism without heavy overheads.",
         tag: 'COST-EFFECTIVE',
         bg: 'bg-[#F3F1EB]',
-        tagBg: 'bg-[#D4E7A6] text-[#1A2818]',
+        tagBg: 'bg-[#D4E7A6] text-brand-dark',
     },
 ];
 

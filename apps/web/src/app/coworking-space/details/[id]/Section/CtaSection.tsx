@@ -38,7 +38,7 @@ const CtaSection = ({ workspace }: CtaSectionProps) => {
 
     return (
         <section>
-            <div className="overflow-hidden rounded-3xl bg-[#4D898B]">
+            <div className="overflow-hidden rounded-3xl bg-primary-400">
                 <div className="grid md:grid-cols-12 gap-0">
                     <div className="md:col-span-7 p-8 md:p-16 text-white flex flex-col justify-center">
                         <h3 className="text-3xl md:text-5xl font-medium mb-6">
@@ -71,7 +71,7 @@ const CtaSection = ({ workspace }: CtaSectionProps) => {
 
                             <div className="flex items-center gap-4">
                                 <div className="flex -space-x-4">
-                                    <div className="relative size-10 rounded-full border-2 border-[#4D898B] overflow-hidden">
+                                    <div className="relative size-10 rounded-full border-2 border-primary-400 overflow-hidden">
                                         <Image
                                             src="/images/thumb-1.png"
                                             alt="User"
@@ -79,7 +79,7 @@ const CtaSection = ({ workspace }: CtaSectionProps) => {
                                             className="object-cover"
                                         />
                                     </div>
-                                    <div className="relative size-10 rounded-full border-2 border-[#4D898B] overflow-hidden">
+                                    <div className="relative size-10 rounded-full border-2 border-primary-400 overflow-hidden">
                                         <Image
                                             src="/images/thumb-2.png"
                                             alt="User"
@@ -87,7 +87,7 @@ const CtaSection = ({ workspace }: CtaSectionProps) => {
                                             className="object-cover"
                                         />
                                     </div>
-                                    <div className="relative size-10 rounded-full border-2 border-[#4D898B] overflow-hidden">
+                                    <div className="relative size-10 rounded-full border-2 border-primary-400 overflow-hidden">
                                         <Image
                                             src="/images/thumb-1.jpg"
                                             alt="User"

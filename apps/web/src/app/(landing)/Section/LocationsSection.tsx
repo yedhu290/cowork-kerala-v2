@@ -43,7 +43,7 @@ const LocationsSection = ({ locations }: Props) => {
     return (
         <section className="w-full mb-20">
             <div className="text-center mb-8 md:mb-10 lg:mb-12">
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-zinc-900 mb-2 md:mb-3">
+                <h2 className="heading-section text-zinc-900 mb-2 md:mb-3">
                     Popular Locations in Kerala
                 </h2>
                 <p className="text-xs sm:text-sm md:text-base text-zinc-700 tracking-wide uppercase px-4">
@@ -68,6 +68,7 @@ const LocationsSection = ({ locations }: Props) => {
                                         src={loc.image}
                                         alt={loc.name}
                                         fill
+                                        sizes="(max-width: 768px) 60vw, 25vw"
                                         className="object-cover transition-transform duration-500 group-hover:scale-110"
                                     />
                                 </div>

@@ -194,7 +194,7 @@ const Form = ({ spaceName, cityName }: FormProps) => {
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="mt-2 w-full rounded-lg bg-[#4D898B] py-3 text-lg font-medium text-white transition-colors hover:bg-primary-500 disabled:opacity-70 flex justify-center items-center gap-2"
+                        className="mt-2 w-full rounded-lg bg-primary-400 py-3 text-lg font-medium text-white transition-colors hover:bg-primary-500 disabled:opacity-70 flex justify-center items-center gap-2"
                     >
                         {isSubmitting && <Loader2 className="animate-spin" size={20} />}
                         Submit

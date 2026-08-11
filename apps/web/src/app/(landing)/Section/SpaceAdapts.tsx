@@ -48,7 +48,7 @@ const SpaceAdapts = () => {
                                 WHY CHOOSE US
                             </p>
                         </div>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-zinc-900 leading-tight">
+                        <h2 className="heading-section text-zinc-900">
                             A Space That Adapts to Your Needs
                         </h2>
                     </div>
@@ -56,7 +56,7 @@ const SpaceAdapts = () => {
                     {/* Description */}
                     <p className="text-sm sm:text-base md:text-lg text-zinc-600 leading-relaxed">
                         Discover and instantly book coworking hubs, private offices, and virtual
-                        address services in Kochi, Thiruvananthapuram, Calicut, and Thrissur.
+                        address services in Kochi, Trivandrum, Calicut, and Thrissur.
                         Compare real-time pricing, amenities, and locations—whether you&apos;re a
                         freelancer, startup, or enterprise, your ideal workspace is just a click
                         away.
@@ -107,6 +107,7 @@ const SpaceAdapts = () => {
                                         src={avatar}
                                         alt={`Community member ${index + 1}`}
                                         fill
+                                        sizes="64px"
                                         className="object-cover"
                                     />
                                 </div>
@@ -141,8 +142,8 @@ const SpaceAdapts = () => {
                                             : ''
                                     }`}
                                 >
-                                    <div className="flex-shrink-0 w-16 h-16 rounded-full bg-[#EBFFD8] flex items-center justify-center">
-                                        <IconComponent className="w-8 h-8 text-[#3b6874]" />
+                                    <div className="flex-shrink-0 w-16 h-16 rounded-full bg-primary-50 flex items-center justify-center">
+                                        <IconComponent className="w-8 h-8 text-primary-500" />
                                     </div>
                                     <div className="flex-1 pt-1">
                                         <h3 className="text-xl font-medium text-zinc-900 mb-2">

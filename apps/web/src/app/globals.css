@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
@@ -12,6 +11,9 @@
     --color-primary-500: #3b6874;
     --color-primary-600: #2f4858;
     --color-primary-700: #76a04e;
+
+    /* Dark forest green used for headings, body copy, and input focus states. */
+    --color-brand-dark: #1a2818;
 }
 
 /* Admin dashboard palette (shadcn/ui semantic tokens, used under /admin) */
@@ -78,11 +80,42 @@
 }
 
 body {
-    font-family: 'Manrope', sans-serif;
+    font-family: var(--font-manrope), sans-serif;
 }
 
 .max-w-default {
     max-width: 80vw;
+}
+
+/* Heading scale.
+   Three deliberately distinct contexts — they differ because their layouts do,
+   not by accident. Colour is left to the usage site (some sit on dark images).
+
+   .heading-hero    standalone display heading on a landing page
+   .heading-overlay short label inside a badge card layered over a hero image,
+                    where the card width constrains how large the text can go
+   .heading-page    page title on content/utility pages (blog, legal, errors) */
+.heading-hero {
+    @apply text-4xl md:text-6xl font-semibold leading-tight;
+}
+
+.heading-overlay {
+    @apply text-4xl md:text-5xl font-medium leading-tight;
+}
+
+.heading-page {
+    @apply text-3xl md:text-4xl font-semibold;
+}
+
+/* Section headings.
+   .heading-section     top-level section heading on a marketing page
+   .heading-subsection  secondary section heading, a step down in scale */
+.heading-section {
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight;
+}
+
+.heading-subsection {
+    @apply text-4xl md:text-5xl font-semibold leading-tight;
 }
 
 /* Button styles used across the public marketing site */

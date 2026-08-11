@@ -48,7 +48,9 @@ const GallerySection = ({ workspace }: GallerySectionProps) => {
             <section>
                 <div className="md:mt-12 flex flex-col gap-2 relative">
                     <div className="rounded-full bg-primary-50 size-12 md:size-18 absolute bottom-8 -left-4 md:bottom-12 md:-left-8 -z-20"></div>
-                    <h1 className="text-2xl md:text-5xl font-medium">{workspace.spaceName}</h1>
+                    {/* Workspace names vary in length, so this keeps its own scale rather
+                        than a shared heading tier. */}
+                    <h1 className="text-3xl md:text-5xl font-medium">{workspace.spaceName}</h1>
                     <div className="flex gap-2 items-center">
                         <IoLocationOutline className="text-sm md:text-lg" />
                         <span className="text-sm md:text-lg text-slate-700">
@@ -165,7 +167,6 @@ const GallerySection = ({ workspace }: GallerySectionProps) => {
                             fill
                             className="object-contain"
                             sizes="90vw"
-                            priority
                         />
                     </div>
 

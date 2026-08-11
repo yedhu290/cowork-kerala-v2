@@ -3,10 +3,11 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Users, DollarSign, ArrowRight } from 'lucide-react';
+import { Users, ArrowRight, IndianRupee, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Workspace } from '@/services/workspace.service';
 import { Location } from '@/services/locations';
 import ContactFormModal from '@/components/ui/ContactFormModal';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const WorkspaceCard = ({
     workspace,
@@ -19,14 +20,14 @@ const WorkspaceCard = ({
     const displayPrice = workspace.pricing.privateOffice
         ? `From ₹${workspace.pricing.privateOffice} /month`
         : workspace.pricing.dedicatedDesk
-        ? `From ₹${workspace.pricing.dedicatedDesk} /month`
-        : workspace.pricing.hotDesk
-        ? `From ₹${workspace.pricing.hotDesk} /day`
-        : 'Contact for pricing';
+          ? `From ₹${workspace.pricing.dedicatedDesk} /month`
+          : workspace.pricing.hotDesk
+            ? `From ₹${workspace.pricing.hotDesk} /day`
+            : 'Contact for pricing';
 
     // Determine image to display
     const displayImage =
-        workspace.images.length > 0 ? workspace.images[0] : '/images/placeholder.jpg';
+        workspace.images.length > 0 ? workspace.images[0] : '/images/placeholder.svg';
 
     return (
         <Link href={`/coworking-space/details/${workspace.id}`} className="block h-full group">
@@ -49,12 +50,12 @@ const WorkspaceCard = ({
                             <h3 className="text-sm font-semibold sm:text-base">
                                 {workspace.spaceName}
                             </h3>
-                            <button
-                                aria-label="View workspace"
-                                className="grid size-8 place-items-center rounded-full bg-black text-white transition-all duration-300 hover:bg-gray-800 hover:scale-110 active:scale-95"
+                            <span
+                                aria-hidden="true"
+                                className="grid size-8 place-items-center rounded-full bg-black text-white transition-all duration-300 group-hover:bg-gray-800 group-hover:scale-110"
                             >
                                 <ArrowRight size={16} className="text-sm" />
-                            </button>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -69,7 +70,7 @@ const WorkspaceCard = ({
                             <span>1 - 10 Persons</span>
                         </div>
                         <div className="flex items-center gap-2 text-gray-700 font-medium">
-                            <DollarSign size={16} className="text-primary-600" />
+                            <IndianRupee size={16} />
                             <span>{displayPrice}</span>
                         </div>
                         <button
@@ -88,10 +89,29 @@ const WorkspaceCard = ({
 type Props = {
     workspaces: Workspace[];
     locations: Location[];
+    pagination?: {
+        page: number;
+        limit: number;
+        total: number;
+        totalPages: number;
+    };
 };
 
-const WorkspaceListing = ({ workspaces, locations }: Props) => {
+const WorkspaceListing = ({ workspaces, locations, pagination }: Props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const searchQuery = searchParams.get('search') || '';
+
+    // Use server-side pagination data
+    const currentPage = pagination?.page || 1;
+    const totalPages = pagination?.totalPages || 1;
+
+    const handlePageChange = (page: number) => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('page', page.toString());
+        router.push(`?${params.toString()}`, { scroll: false });
+    };
 
     const handleGetQuote = (e: React.MouseEvent) => {
         e.preventDefault(); // Prevent navigation
@@ -102,10 +122,51 @@ const WorkspaceListing = ({ workspaces, locations }: Props) => {
     if (!workspaces || workspaces.length === 0) {
         return (
             <section className="w-full py-12 text-center">
-                <p className="text-gray-500">No workspaces found matching your criteria.</p>
+                <p className="text-gray-500">
+                    {searchQuery
+                        ? `No workspaces found matching "${searchQuery}"`
+                        : 'No workspaces found matching your criteria.'}
+                </p>
             </section>
         );
     }
+
+    // Generate page numbers to display
+    const getPageNumbers = () => {
+        const pages: (number | string)[] = [];
+        const maxVisible = 5;
+
+        if (totalPages <= maxVisible) {
+            // Show all pages if total is small
+            for (let i = 1; i <= totalPages; i++) {
+                pages.push(i);
+            }
+        } else {
+            // Always show first page
+            pages.push(1);
+
+            if (currentPage > 3) {
+                pages.push('...');
+            }
+
+            // Show pages around current page
+            const start = Math.max(2, currentPage - 1);
+            const end = Math.min(totalPages - 1, currentPage + 1);
+
+            for (let i = start; i <= end; i++) {
+                pages.push(i);
+            }
+
+            if (currentPage < totalPages - 2) {
+                pages.push('...');
+            }
+
+            // Always show last page
+            pages.push(totalPages);
+        }
+
+        return pages;
+    };
 
     return (
         <section className="w-full">
@@ -114,6 +175,69 @@ const WorkspaceListing = ({ workspaces, locations }: Props) => {
                     <WorkspaceCard key={ws.id} workspace={ws} onGetQuote={handleGetQuote} />
                 ))}
             </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-12">
+                    {/* Previous Button */}
+                    <button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        aria-label="Previous page"
+                    >
+                        <ChevronLeft size={18} />
+                        <span className="hidden sm:inline">Previous</span>
+                    </button>
+
+                    {/* Page Numbers */}
+                    <div className="flex items-center gap-1">
+                        {getPageNumbers().map((page, index) => {
+                            if (page === '...') {
+                                return (
+                                    <span
+                                        key={`ellipsis-${index}`}
+                                        className="px-3 py-2 text-gray-500"
+                                    >
+                                        ...
+                                    </span>
+                                );
+                            }
+
+                            const pageNum = page as number;
+                            const isActive = pageNum === currentPage;
+
+                            return (
+                                <button
+                                    key={pageNum}
+                                    onClick={() => handlePageChange(pageNum)}
+                                    className={`min-w-[40px] h-10 px-3 rounded-lg font-medium transition-colors ${
+                                        isActive
+                                            ? 'bg-primary-500 text-white'
+                                            : 'text-gray-700 hover:bg-gray-100'
+                                    }`}
+                                    aria-label={`Go to page ${pageNum}`}
+                                    aria-current={isActive ? 'page' : undefined}
+                                >
+                                    {pageNum}
+                                </button>
+                            );
+                        })}
+                    </div>
+
+                    {/* Next Button */}
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        aria-label="Next page"
+                    >
+                        <span className="hidden sm:inline">Next</span>
+                        <ChevronRight size={18} />
+                    </button>
+                </div>
+            )}
+
             <ContactFormModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}

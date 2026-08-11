@@ -17,6 +17,7 @@ const HeroSection = ({ city }: HeroSectionProps) => {
                                 src="/images/virtual-office/banner-1.png"
                                 alt="Virtual Office"
                                 fill
+                                sizes="(max-width: 768px) 100vw, 80vw"
                                 priority
                                 className="object-cover"
                             />
@@ -25,9 +26,9 @@ const HeroSection = ({ city }: HeroSectionProps) => {
 
                     <div className="order-1 md:order-2 md:col-span-4 md:flex md:items-end absolute left-0 bottom-0 z-10">
                         <div className="mx-auto  w-fit rounded-tr-4xl bg-primary-100 p-6 md:mt-0 md:w-full md:p-8">
-                            <h1 className="text-4xl font-medium leading-tight md:text-5xl">
+                            <h1 className="heading-overlay">
                                 Virtual <br className="md:hidden" />
-                                Office {city && <span className="block">in {city}</span>}
+                                Office <span className="block">in {city || 'Kerala'}</span>
                             </h1>
                         </div>
                     </div>

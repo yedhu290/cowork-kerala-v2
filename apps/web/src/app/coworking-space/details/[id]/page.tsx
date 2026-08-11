@@ -4,10 +4,13 @@ import { notFound } from 'next/navigation';
 import CtaSection from './Section/CtaSection';
 import Footer from '@/components/ui/Footer';
 import GallerySection from './Section/GallerySection';
-import Header from '@/components/ui/Header';
+import Header from '@/components/ui/HeaderServer';
 import OtherLocationsSection from './Section/OtherLocationsSection';
 import OverviewSection from './Section/OverviewSection';
 import Fixedw from '@/components/ui/Fixedw';
+import Breadcrumbs from '@/components/ui/Breadcrumbs';
+import JsonLd from '@/components/seo/JsonLd';
+import { DEFAULT_OG_IMAGE, workspaceProductJsonLd } from '@/lib/seo';
 import { getWorkspaceById, getWorkspaces } from '@/services/workspace.service';
 
 interface PageProps {
@@ -18,37 +21,47 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const { id } = await params;
     const response = await getWorkspaceById(id);
 
+    // Trigger the 404 during metadata resolution too. If metadata returns a
+    // normal object for a missing workspace, the response commits a 200 before
+    // the page's own notFound() runs, producing a soft 404.
     if (!response?.data) {
-        return {
-            title: 'Workspace Not Found | CoWork Kerala',
-        };
+        notFound();
     }
 
     const workspace = response.data;
+    const shareImage = workspace.images?.[0] || DEFAULT_OG_IMAGE;
 
     return {
-        title: `${workspace.spaceName} | CoWork Kerala`,
+        title: `${workspace.spaceName}, ${workspace.city.name} | CoWork Kerala`,
         description:
             workspace.shortDescription ||
             `Discover ${workspace.spaceName} - ${workspace.spaceType} in ${workspace.city.name}. Book your workspace today.`,
         openGraph: {
-            title: `${workspace.spaceName} | CoWork Kerala`,
+            title: `${workspace.spaceName}, ${workspace.city.name} | CoWork Kerala`,
             description:
                 workspace.shortDescription || `${workspace.spaceType} in ${workspace.city.name}`,
             type: 'website',
-            images: workspace.images?.[0] ? [workspace.images[0]] : [],
+            images: [shareImage],
         },
         twitter: {
             card: 'summary_large_image',
-            title: `${workspace.spaceName} | CoWork Kerala`,
+            title: `${workspace.spaceName}, ${workspace.city.name} | CoWork Kerala`,
             description:
                 workspace.shortDescription || `${workspace.spaceType} in ${workspace.city.name}`,
-            images: workspace.images?.[0] ? [workspace.images[0]] : [],
+            images: [shareImage],
+        },
+        alternates: {
+            canonical: `/coworking-space/details/${id}`,
         },
     };
 }
 
-export const revalidate = 60; // Revalidate every 60 seconds
+// Detail pages are rendered dynamically rather than statically. With static/ISR
+// generation, notFound() for an unknown id was cached and served as a soft 404
+// (HTTP 200), which search engines can index as a real page. Dynamic rendering
+// returns a proper 404 for invalid ids, keeps newly-added workspaces viewable
+// immediately, and always reflects current pricing and availability.
+export const dynamic = 'force-dynamic';
 
 const Page = async ({ params }: PageProps) => {
     const { id } = await params;
@@ -69,17 +82,39 @@ const Page = async ({ params }: PageProps) => {
         <>
             <Fixedw className="container mx-auto md:px-8 flex flex-col md:gap-12 gap-4">
                 <Header />
-                <GallerySection workspace={workspace} />
-                <div className="mt-10" />
-                <OverviewSection workspace={workspace} />
-                <div className="mt-10" />
-                <CtaSection workspace={workspace} />
-                <div className="mt-10" />
-                <OtherLocationsSection
-                    workspaces={otherWorkspaces}
-                    cityName={workspace.city.name}
-                />
-                <div className="mt-10" />
+                <main className="flex flex-col md:gap-12 gap-4">
+                    <JsonLd
+                        data={workspaceProductJsonLd(
+                            workspace,
+                            `/coworking-space/details/${id}`,
+                        )}
+                    />
+                    <Breadcrumbs
+                        items={[
+                            { name: 'Home', url: '/' },
+                            { name: 'Coworking Spaces', url: '/coworking-space' },
+                            {
+                                name: workspace.city.name,
+                                url: `/coworking-space/${workspace.city.name.toLowerCase()}`,
+                            },
+                            {
+                                name: workspace.spaceName,
+                                url: `/coworking-space/details/${id}`,
+                            },
+                        ]}
+                    />
+                    <GallerySection workspace={workspace} />
+                    <div className="mt-10" />
+                    <OverviewSection workspace={workspace} />
+                    <div className="mt-10" />
+                    <CtaSection workspace={workspace} />
+                    <div className="mt-10" />
+                    <OtherLocationsSection
+                        workspaces={otherWorkspaces}
+                        cityName={workspace.city.name}
+                    />
+                    <div className="mt-10" />
+                </main>
             </Fixedw>
             <Footer />
         </>

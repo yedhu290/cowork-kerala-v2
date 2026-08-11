@@ -62,7 +62,7 @@ const ContactForm = ({ locations }: Props) => {
             <div className="relative mx-auto px-8 md:px-[15%]">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                     <div className="lg:col-span-8">
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-zinc-900 mb-2">
+                        <h2 className="heading-section text-zinc-900 mb-2">
                             Let us find your perfect Property
                         </h2>
                         <p className="text-base sm:text-lg text-zinc-700 mb-8">
@@ -186,6 +186,7 @@ const ContactForm = ({ locations }: Props) => {
                                 src="/images/landing/cta.png"
                                 alt="Coworking expert"
                                 fill
+                                sizes="320px"
                                 className="object-cover"
                             />
                         </div>
