@@ -4,7 +4,7 @@ import React from 'react';
 const GlimpseInsideSection = () => {
     return (
         <section className="w-full">
-            <h2 className="mb-8 text-4xl font-semibold text-zinc-900 md:text-5xl">
+            <h2 className="heading-subsection mb-8 text-zinc-900">
                 A Glimpse Inside
             </h2>
 
@@ -15,6 +15,7 @@ const GlimpseInsideSection = () => {
                         src="/images/glimpse/standing-desk.png"
                         alt="Woman working at standing desk"
                         fill
+                        sizes="(max-width: 768px) 100vw, 42vw"
                         className="object-cover"
                     />
                 </div>
@@ -27,6 +28,7 @@ const GlimpseInsideSection = () => {
                             src="/images/glimpse/group-discussion.png"
                             alt="Group discussion in lounge"
                             fill
+                            sizes="(max-width: 768px) 100vw, 42vw"
                             className="object-cover"
                         />
                     </div>
@@ -39,6 +41,7 @@ const GlimpseInsideSection = () => {
                                 src="/images/glimpse/open-office.png"
                                 alt="Open office space"
                                 fill
+                                sizes="(max-width: 768px) 100vw, 42vw"
                                 className="object-cover"
                             />
                         </div>
@@ -50,6 +53,7 @@ const GlimpseInsideSection = () => {
                                     src="/images/glimpse/office-floor.png"
                                     alt="Office floor view"
                                     fill
+                                    sizes="(max-width: 768px) 100vw, 42vw"
                                     className="object-cover"
                                 />
                             </div>
@@ -58,6 +62,7 @@ const GlimpseInsideSection = () => {
                                     src="/images/glimpse/meeting-room.png"
                                     alt="Meeting room"
                                     fill
+                                    sizes="(max-width: 768px) 100vw, 42vw"
                                     className="object-cover"
                                 />
                             </div>

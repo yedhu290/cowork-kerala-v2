@@ -20,7 +20,7 @@ const TeamSection = () => {
                 <span className="rounded-full bg-primary-200 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-zinc-900">
                     Team Members
                 </span>
-                <h2 className="text-4xl font-semibold text-zinc-900 md:text-5xl">
+                <h2 className="heading-subsection text-zinc-900">
                     Meet the People Behind Cowork
                 </h2>
             </div>

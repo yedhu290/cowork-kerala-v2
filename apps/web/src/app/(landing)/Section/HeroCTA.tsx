@@ -31,7 +31,7 @@ const HeroCTA = ({ locations }: Props) => {
 
                 {/* Content Overlay */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
-                    <h2 className="mb-6 md:mb-8 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight max-w-4xl">
+                    <h2 className="heading-section mb-6 md:mb-8 max-w-4xl">
                         Welcome a new way of
                         <br />
                         productivity & collaboration

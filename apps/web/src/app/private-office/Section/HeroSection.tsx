@@ -1,71 +1,85 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight, Mail } from 'lucide-react';
+import { ArrowRight, Building2, Check } from 'lucide-react';
 
 type Props = {
     city?: string;
 };
 
+const highlights = [
+    'Move-in ready cabins',
+    '24/7 secure access',
+    'All-inclusive pricing',
+    'Flexible terms',
+];
+
 const HeroSection = ({ city }: Props) => {
     return (
-        <section className="w-full bg-primary-100 py-6 px-3 md:p-12 mb-12 md:mb-20">
-            <div className="md:px-[12%] mx-auto">
-                <h1 className="text-4xl md:text-6xl font-semibold text-zinc-900 mb-12">
-                    Private Office{city ? ` in ${city}` : ''}
-                </h1>
+        <section className="w-full pt-4 md:pt-8 mb-14 md:mb-24">
+            <div className="container mx-auto px-4 md:px-8">
+                <div className="grid items-center gap-8 rounded-[2.5rem] bg-linear-to-br from-primary-100 via-primary-50 to-white p-6 shadow-[0_24px_70px_-28px_rgba(16,46,22,0.35)] ring-1 ring-primary-100 md:grid-cols-2 md:gap-12 md:p-10 lg:p-14">
+                    {/* Content side */}
+                    <div className="flex flex-col gap-6">
+                        <span className="inline-flex w-fit items-center gap-2 rounded-full bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-primary-700 shadow-sm">
+                            <Building2 size={14} aria-hidden="true" />
+                            Private Offices in Kerala
+                        </span>
 
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-                    {/* Left: Large Image */}
-                    <div className="md:col-span-7 relative h-[300px] md:h-[400px] rounded-3xl overflow-hidden">
-                        <Image
-                            src="/images/private-office/hero-1.png"
-                            alt="Private Office"
-                            fill
-                            className="object-cover"
-                        />
-                        <div className="absolute z-10 bottom-6 left-1/2 -translate-x-1/2 md:left-6 md:translate-x-0 bg-black/50 drop-shadow-md p-4 rounded-xl w-2xl max-w-[95%] md:max-w-sm text-center md:text-left text-white text-sm font-medium leading-relaxed">
-                            Get a secure space with layout, amenities, and services configured to
-                            your requirements, so your office truly works the way you do
+                        <h1 className="heading-hero text-zinc-900">
+                            A private office{city ? ` in ${city}` : ' in Kerala'} your team will
+                            call home
+                        </h1>
+
+                        <p className="max-w-md leading-relaxed text-zinc-600 md:text-lg">
+                            A furnished, lockable cabin that’s entirely yours — move-in ready, fully
+                            managed, and built around the way your team works.
+                        </p>
+
+                        {/* Key highlights */}
+                        <ul className="flex flex-wrap gap-2.5">
+                            {highlights.map((item) => (
+                                <li
+                                    key={item}
+                                    className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-sm font-medium text-zinc-700 shadow-sm"
+                                >
+                                    <span className="grid size-5 shrink-0 place-items-center rounded-full bg-primary-500 text-white">
+                                        <Check size={12} strokeWidth={3} aria-hidden="true" />
+                                    </span>
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
+
+                        {/* CTA */}
+                        <div className="flex flex-wrap items-center gap-5 pt-2">
+                            <Link
+                                href="/contact"
+                                className="inline-flex items-center gap-2 rounded-full bg-primary-500 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-primary-500/25 transition-all hover:bg-primary-600 hover:shadow-xl hover:shadow-primary-500/30"
+                            >
+                                Get a quote
+                                <ArrowRight size={18} />
+                            </Link>
+                            <a
+                                href="tel:+917356735091"
+                                className="text-sm font-semibold text-primary-700 underline-offset-4 transition-colors hover:underline"
+                            >
+                                or call +91 7356735091
+                            </a>
                         </div>
                     </div>
 
-                    {/* Right: Content + Small Images */}
-                    <div className="md:col-span-5 flex flex-col gap-6">
-                        <div className="mb-4">
-                            <h2 className="text-2xl md:text-3xl font-medium text-zinc-900 leading-tight mb-6">
-                                We also help companies set up customised, fully private,
-                                ready‑to‑use offices across Kerala with dedicated cabins and suites
-                                tailored to your team size and workflow.
-                            </h2>
-                            <Link
-                                href="/contact"
-                                className="inline-flex items-center gap-2 rounded-full bg-white p-2 px-3 text-sm font-bold text-zinc-900 transition-transform hover:scale-105"
-                            >
-                                <span>Contact us</span>
-                                <div className="flex size-8 items-center justify-center rounded-full bg-zinc-900 text-white">
-                                    <Mail size={18} />
-                                </div>
-                            </Link>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4 h-full">
-                            <div className="relative h-[150px] md:h-auto rounded-3xl overflow-hidden">
-                                <Image
-                                    src="/images/private-office/hero-2.png"
-                                    alt="Office detail"
-                                    fill
-                                    className="object-cover"
-                                />
-                            </div>
-                            <div className="relative h-[150px] md:h-auto rounded-3xl overflow-hidden">
-                                <Image
-                                    src="/images/private-office/hero-3.png"
-                                    alt="Meeting room"
-                                    fill
-                                    className="object-cover"
-                                />
-                            </div>
+                    {/* Image side */}
+                    <div className="relative">
+                        <div className="relative aspect-4/3 w-full overflow-hidden rounded-[2rem] shadow-xl ring-1 ring-black/5 md:aspect-4/5">
+                            <Image
+                                src="/images/private-office/hero-1.png"
+                                alt={`A furnished private office cabin${city ? ` in ${city}` : ' in Kerala'} for a growing team`}
+                                fill
+                                priority
+                                sizes="(max-width: 768px) 100vw, 45vw"
+                                className="object-cover"
+                            />
                         </div>
                     </div>
                 </div>

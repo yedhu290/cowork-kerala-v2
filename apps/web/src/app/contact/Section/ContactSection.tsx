@@ -1,6 +1,6 @@
 'use client';
 
-import { Phone, Mail, MapPin } from 'lucide-react';
+import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -16,6 +16,11 @@ const contactSchema = z.object({
 });
 
 type ContactFormValues = z.infer<typeof contactSchema>;
+
+const inputClass = (hasError: boolean) =>
+    `h-12 w-full rounded-xl border bg-white px-4 text-zinc-900 placeholder:text-zinc-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 focus:outline-none transition-colors ${
+        hasError ? 'border-red-500' : 'border-zinc-200'
+    }`;
 
 const ContactSection = () => {
     const {
@@ -44,134 +49,113 @@ const ContactSection = () => {
     };
 
     return (
-        <section className="grid gap-10 md:grid-cols-2 md:gap-16">
-            {/* Left: Simple Contact Form */}
-            <div>
-                <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-5">
-                    <div className="grid gap-4 md:grid-cols-2">
-                        <div className="space-y-1">
-                            <input
-                                {...register('name')}
-                                type="text"
-                                placeholder="Name"
-                                aria-label="Name"
-                                className={`h-12 w-full rounded-xl border bg-gray-50 px-4 text-gray-900 focus:border-primary-300 focus:outline-none ${
-                                    errors.name ? 'border-red-500' : 'border-gray-200'
-                                }`}
-                            />
-                            {errors.name && (
-                                <p className="text-red-500 text-xs">{errors.name.message}</p>
-                            )}
+        <section className="grid gap-8 lg:grid-cols-5 lg:gap-10">
+            {/* Form card */}
+            <div className="lg:col-span-3">
+                <div className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm md:p-8">
+                    <div className="mb-6 flex flex-col gap-2">
+                        <div className="flex items-center gap-3">
+                            <span className="h-px w-10 bg-primary-500" />
+                            <span className="text-xs font-bold uppercase tracking-[0.25em] text-primary-700">
+                                Send An Enquiry
+                            </span>
                         </div>
-                        <div className="space-y-1">
-                            <input
-                                {...register('phone')}
-                                type="tel"
-                                placeholder="Phone"
-                                aria-label="Phone"
-                                className={`h-12 w-full rounded-xl border bg-gray-50 px-4 text-gray-900 focus:border-primary-300 focus:outline-none ${
-                                    errors.phone ? 'border-red-500' : 'border-gray-200'
-                                }`}
-                            />
-                            {errors.phone && (
-                                <p className="text-red-500 text-xs">{errors.phone.message}</p>
-                            )}
-                        </div>
+                        <h2 className="heading-subsection text-zinc-900">
+                            Tell us what you need
+                        </h2>
+                        <p className="leading-relaxed text-zinc-600">
+                            Share a few details and our Kerala team will get back within one working
+                            day with options and pricing that fit.
+                        </p>
                     </div>
 
-                    <div className="space-y-1">
-                        <input
-                            {...register('email')}
-                            type="email"
-                            placeholder="Email"
-                            aria-label="Email"
-                            className={`h-12 w-full rounded-xl border bg-gray-50 px-4 text-gray-900 focus:border-primary-300 focus:outline-none ${
-                                errors.email ? 'border-red-500' : 'border-gray-200'
-                            }`}
+                    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-5">
+                        <div className="grid gap-4 md:grid-cols-2">
+                            <div className="space-y-1">
+                                <input
+                                    {...register('name')}
+                                    type="text"
+                                    placeholder="Name"
+                                    aria-label="Name"
+                                    className={inputClass(!!errors.name)}
+                                />
+                                {errors.name && (
+                                    <p className="text-xs text-red-500">{errors.name.message}</p>
+                                )}
+                            </div>
+                            <div className="space-y-1">
+                                <input
+                                    {...register('phone')}
+                                    type="tel"
+                                    placeholder="Phone"
+                                    aria-label="Phone"
+                                    className={inputClass(!!errors.phone)}
+                                />
+                                {errors.phone && (
+                                    <p className="text-xs text-red-500">{errors.phone.message}</p>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="space-y-1">
+                            <input
+                                {...register('email')}
+                                type="email"
+                                placeholder="Email"
+                                aria-label="Email"
+                                className={inputClass(!!errors.email)}
+                            />
+                            {errors.email && (
+                                <p className="text-xs text-red-500">{errors.email.message}</p>
+                            )}
+                        </div>
+
+                        <div className="space-y-1">
+                            <select
+                                {...register('enquiryType')}
+                                aria-label="Enquiry type"
+                                className={inputClass(!!errors.enquiryType)}
+                                defaultValue=""
+                            >
+                                <option value="" disabled>
+                                    Select enquiry type
+                                </option>
+                                <option value="Looking for Space">Looking for a space</option>
+                                <option value="Listing Space">Listing my space</option>
+                            </select>
+                            {errors.enquiryType && (
+                                <p className="text-xs text-red-500">{errors.enquiryType.message}</p>
+                            )}
+                        </div>
+
+                        <textarea
+                            {...register('message')}
+                            placeholder="Your message"
+                            rows={6}
+                            aria-label="Message"
+                            className="w-full resize-none rounded-xl border border-zinc-200 bg-white px-4 py-3 text-zinc-900 placeholder:text-zinc-400 transition-colors focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100"
                         />
-                        {errors.email && (
-                            <p className="text-red-500 text-xs">{errors.email.message}</p>
-                        )}
-                    </div>
 
-                    <div className="space-y-1">
-                        <select
-                            {...register('enquiryType')}
-                            aria-label="Enquiry Type"
-                            className={`h-12 w-full rounded-xl border bg-gray-50 px-4 text-gray-900 focus:border-primary-300 focus:outline-none ${
-                                errors.enquiryType ? 'border-red-500' : 'border-gray-200'
-                            }`}
-                            defaultValue=""
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="inline-flex h-12 w-full items-center justify-center rounded-full bg-primary-500 text-sm font-bold text-white shadow-lg shadow-primary-500/25 transition-all hover:bg-primary-600 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
                         >
-                            <option value="" disabled>
-                                Select Enquiry Type
-                            </option>
-                            <option value="Looking for Space">Looking for Space</option>
-                            <option value="Listing Space">Listing Space</option>
-                        </select>
-                        {errors.enquiryType && (
-                            <p className="text-red-500 text-xs">{errors.enquiryType.message}</p>
-                        )}
-                    </div>
-
-                    <textarea
-                        {...register('message')}
-                        placeholder="Message"
-                        rows={8}
-                        aria-label="Message"
-                        className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 focus:border-primary-300 focus:outline-none resize-none"
-                    />
-
-                    <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="h-12 w-full bg-primary-400 rounded-md text-white font-medium hover:bg-primary-700 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
-                    >
-                        {isSubmitting ? 'Submitting...' : 'Submit'}
-                    </button>
-                </form>
+                            {isSubmitting ? 'Submitting…' : 'Submit enquiry'}
+                        </button>
+                    </form>
+                </div>
             </div>
 
-            {/* Right: Info */}
-            <div className="flex flex-col gap-6">
-                <p className="text-zinc-700 leading-relaxed">
-                    Have questions, need a custom quote, or want help shortlisting spaces for your
-                    team? The CoWork Kerala team can assist with workspace discovery, virtual office
-                    selection, and end‑to‑end booking support across all major cities in Kerala.
-                    <br />
-                    Space providers can fill out the form with the “List Your Space” option to get
-                    your space added to CoWork Kerala.
-                </p>
-
-                <div className="flex items-start gap-4">
-                    <div className="size-14 rounded-full bg-primary-100 flex items-center justify-center">
-                        <Phone className="text-primary-500 font-bold" />
-                    </div>
-                    <div>
-                        <p className="text-sm font-semibold text-zinc-900">Phone Number</p>
-                        <p className="text-zinc-700">+91 7356735091</p>
-                    </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                    <div className="size-14 rounded-full bg-primary-100 flex items-center justify-center">
-                        <Mail className="text-primary-500 font-bold" />
-                    </div>
-                    <div>
-                        <p className="text-sm font-semibold text-zinc-900">Email Address</p>
-                        <p className="text-zinc-700">coworkkerala@gmail.com</p>
-                    </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                    <div className="size-14 rounded-full bg-primary-100 flex items-center justify-center">
-                        <MapPin className="text-primary-500 font-bold" />
-                    </div>
-                    <div>
-                        <p className="text-sm font-semibold text-zinc-900">Address</p>
-                        <p className="text-zinc-700">Kochi, Kerala, India</p>
-                    </div>
-                </div>
+            {/* Photo */}
+            <div className="relative min-h-[18rem] w-full overflow-hidden rounded-3xl border border-zinc-200 lg:col-span-2">
+                <Image
+                    src="/images/glimpse/open-office.png"
+                    alt="A bright, open CoWork Kerala workspace in Kerala"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    className="object-cover"
+                />
             </div>
         </section>
     );
