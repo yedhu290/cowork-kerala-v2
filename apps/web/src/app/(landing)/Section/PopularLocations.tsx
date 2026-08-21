@@ -52,7 +52,7 @@ const PopularLocations = ({ locations }: Props) => {
         <section className="w-full py-8 md:py-12 lg:py-16">
             {/* Header */}
             <div className="text-center mb-8 md:mb-10 lg:mb-12">
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-zinc-900 mb-2 md:mb-3">
+                <h2 className="heading-section text-zinc-900 mb-2 md:mb-3">
                     Popular Locations in Kerala
                 </h2>
                 <p className="text-xs sm:text-sm md:text-base text-zinc-700 tracking-wide uppercase px-4">

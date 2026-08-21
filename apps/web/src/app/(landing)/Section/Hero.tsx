@@ -41,7 +41,7 @@ const Hero = ({ locations }: Props) => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
                 {/* Left content */}
                 <div className="lg:col-span-7 flex flex-col gap-6 md:gap-8">
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold leading-tight text-zinc-900">
+                    <h1 className="heading-hero text-zinc-900">
                         We help you find your ideal workspace in kerala
                     </h1>
                     <p className="text-base sm:text-lg md:text-xl leading-relaxed text-zinc-700">
@@ -106,7 +106,7 @@ const Hero = ({ locations }: Props) => {
 
                 {/* Right images */}
                 <div className="lg:col-span-5 flex flex-col gap-6 md:gap-8">
-                    <div className="w-full aspect-[4/3] rounded-2xl md:rounded-3xl bg-[#EBFFD8] overflow-hidden relative">
+                    <div className="w-full aspect-[4/3] rounded-2xl md:rounded-3xl bg-primary-50 overflow-hidden relative">
                         <Image
                             src="/images/landing/banner-1.png"
                             alt="Coworking space"
@@ -116,7 +116,7 @@ const Hero = ({ locations }: Props) => {
                             sizes="(max-width: 1024px) 80vw, 32vw"
                         />
                     </div>
-                    <div className="w-full aspect-[16/9] rounded-2xl md:rounded-3xl bg-[#EBFFD8] overflow-hidden relative">
+                    <div className="w-full aspect-[16/9] rounded-2xl md:rounded-3xl bg-primary-50 overflow-hidden relative">
                         <Image
                             src="/images/landing/banner-2.png"
                             alt="Modern workspace"

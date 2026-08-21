@@ -69,17 +69,17 @@ const ContactFormModal = ({ isOpen, onClose, onSubmit, locations }: ContactFormM
                     className="absolute top-4 right-4 p-2 rounded-full hover:bg-black/10 transition-colors"
                     aria-label="Close modal"
                 >
-                    <X size={24} className="text-[#1A2818]" />
+                    <X size={24} className="text-brand-dark" />
                 </button>
 
-                <h2 className="text-2xl md:text-3xl font-semibold text-[#1A2818] mb-6">
+                <h2 className="text-2xl md:text-3xl font-semibold text-brand-dark mb-6">
                     Get in Touch
                 </h2>
 
                 <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-bold tracking-wider text-[#1A2818] uppercase">
+                            <label className="text-[10px] font-bold tracking-wider text-brand-dark uppercase">
                                 Name
                             </label>
                             <input
@@ -87,7 +87,7 @@ const ContactFormModal = ({ isOpen, onClose, onSubmit, locations }: ContactFormM
                                 type="text"
                                 placeholder="Jane Smith"
                                 aria-label="Name"
-                                className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-[#1A2818]/20 focus:border-[#1A2818]/30 outline-none text-sm placeholder:text-gray-400 ${
+                                className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark/30 outline-none text-sm placeholder:text-gray-400 ${
                                     errors.name ? 'border-red-500' : 'border-gray-300'
                                 }`}
                             />
@@ -96,7 +96,7 @@ const ContactFormModal = ({ isOpen, onClose, onSubmit, locations }: ContactFormM
                             )}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-bold tracking-wider text-[#1A2818] uppercase">
+                            <label className="text-[10px] font-bold tracking-wider text-brand-dark uppercase">
                                 Phone
                             </label>
                             <input
@@ -104,7 +104,7 @@ const ContactFormModal = ({ isOpen, onClose, onSubmit, locations }: ContactFormM
                                 type="tel"
                                 placeholder="0123 456 789"
                                 aria-label="Phone Number"
-                                className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-[#1A2818]/20 focus:border-[#1A2818]/30 outline-none text-sm placeholder:text-gray-400 ${
+                                className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark/30 outline-none text-sm placeholder:text-gray-400 ${
                                     errors.phone ? 'border-red-500' : 'border-gray-300'
                                 }`}
                             />
@@ -115,7 +115,7 @@ const ContactFormModal = ({ isOpen, onClose, onSubmit, locations }: ContactFormM
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-bold tracking-wider text-[#1A2818] uppercase">
+                        <label className="text-[10px] font-bold tracking-wider text-brand-dark uppercase">
                             Email
                         </label>
                         <input
@@ -123,7 +123,7 @@ const ContactFormModal = ({ isOpen, onClose, onSubmit, locations }: ContactFormM
                             type="email"
                             placeholder="jane@framer.com"
                             aria-label="Email Address"
-                            className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-[#1A2818]/20 focus:border-[#1A2818]/30 outline-none text-sm placeholder:text-gray-400 ${
+                            className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark/30 outline-none text-sm placeholder:text-gray-400 ${
                                 errors.email ? 'border-red-500' : 'border-gray-300'
                             }`}
                         />
@@ -134,14 +134,14 @@ const ContactFormModal = ({ isOpen, onClose, onSubmit, locations }: ContactFormM
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-bold tracking-wider text-[#1A2818] uppercase">
+                            <label className="text-[10px] font-bold tracking-wider text-brand-dark uppercase">
                                 Space Type
                             </label>
                             <div className="relative">
                                 <select
                                     {...register('spaceType')}
                                     aria-label="Type of Space"
-                                    className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-[#1A2818]/20 focus:border-[#1A2818]/30 outline-none text-sm appearance-none text-gray-600 ${
+                                    className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark/30 outline-none text-sm appearance-none text-gray-600 ${
                                         errors.spaceType ? 'border-red-500' : 'border-gray-300'
                                     }`}
                                 >
@@ -175,7 +175,7 @@ const ContactFormModal = ({ isOpen, onClose, onSubmit, locations }: ContactFormM
                             )}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-bold tracking-wider text-[#1A2818] uppercase">
+                            <label className="text-[10px] font-bold tracking-wider text-brand-dark uppercase">
                                 Number of Seats
                             </label>
                             <input
@@ -183,7 +183,7 @@ const ContactFormModal = ({ isOpen, onClose, onSubmit, locations }: ContactFormM
                                 type="number"
                                 placeholder="1"
                                 aria-label="Number of Seats"
-                                className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-[#1A2818]/20 focus:border-[#1A2818]/30 outline-none text-sm placeholder:text-gray-400 ${
+                                className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark/30 outline-none text-sm placeholder:text-gray-400 ${
                                     errors.numberOfSeats ? 'border-red-500' : 'border-gray-300'
                                 }`}
                             />
@@ -196,14 +196,14 @@ const ContactFormModal = ({ isOpen, onClose, onSubmit, locations }: ContactFormM
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-bold tracking-wider text-[#1A2818] uppercase">
+                        <label className="text-[10px] font-bold tracking-wider text-brand-dark uppercase">
                             Location
                         </label>
                         <div className="relative">
                             <select
                                 {...register('location')}
                                 aria-label="Select City"
-                                className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-[#1A2818]/20 focus:border-[#1A2818]/30 outline-none text-sm appearance-none text-gray-600 ${
+                                className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark/30 outline-none text-sm appearance-none text-gray-600 ${
                                     errors.location ? 'border-red-500' : 'border-gray-300'
                                 }`}
                             >
@@ -238,7 +238,7 @@ const ContactFormModal = ({ isOpen, onClose, onSubmit, locations }: ContactFormM
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-[10px] font-bold tracking-wider text-[#1A2818] uppercase">
+                        <label className="text-[10px] font-bold tracking-wider text-brand-dark uppercase">
                             Message
                         </label>
                         <textarea
@@ -246,7 +246,7 @@ const ContactFormModal = ({ isOpen, onClose, onSubmit, locations }: ContactFormM
                             rows={4}
                             placeholder="Write your message"
                             aria-label="Message"
-                            className="w-full px-4 py-3 rounded-lg bg-white border border-gray-300 focus:ring-2 focus:ring-[#1A2818]/20 focus:border-[#1A2818]/30 outline-none text-sm placeholder:text-gray-400 resize-none"
+                            className="w-full px-4 py-3 rounded-lg bg-white border border-gray-300 focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark/30 outline-none text-sm placeholder:text-gray-400 resize-none"
                         />
                     </div>
 
@@ -255,7 +255,7 @@ const ContactFormModal = ({ isOpen, onClose, onSubmit, locations }: ContactFormM
                         <button
                             type="button"
                             onClick={onClose}
-                            className="flex-1 bg-white hover:bg-gray-100 text-[#1A2818] font-medium py-3 rounded-lg transition-colors duration-200 border border-[#1A2818]/20"
+                            className="flex-1 bg-white hover:bg-gray-100 text-brand-dark font-medium py-3 rounded-lg transition-colors duration-200 border border-brand-dark/20"
                         >
                             Cancel
                         </button>

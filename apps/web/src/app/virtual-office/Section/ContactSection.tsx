@@ -75,6 +75,7 @@ const ContactSection = ({ locations = [], selectedCity = '' }: Props) => {
                     src="/images/glimpse/group-discussion.png"
                     alt="Contact us"
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
                 />
                 <div className="absolute inset-0 bg-black/40 flex flex-col justify-end p-8 md:p-12">
@@ -98,7 +99,7 @@ const ContactSection = ({ locations = [], selectedCity = '' }: Props) => {
             <div className="bg-[#D4E7A6] rounded-3xl p-8 md:p-12">
                 <form onSubmit={handleSubmit(handleFormSubmit)} className="flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
-                        <label className="text-xs font-bold uppercase text-[#1A2818]">Name</label>
+                        <label className="text-xs font-bold uppercase text-brand-dark">Name</label>
                         <input
                             {...register('name')}
                             type="text"
@@ -113,7 +114,7 @@ const ContactSection = ({ locations = [], selectedCity = '' }: Props) => {
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <label className="text-xs font-bold uppercase text-[#1A2818]">Mail</label>
+                        <label className="text-xs font-bold uppercase text-brand-dark">Mail</label>
                         <input
                             {...register('email')}
                             type="email"
@@ -129,7 +130,7 @@ const ContactSection = ({ locations = [], selectedCity = '' }: Props) => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="flex flex-col gap-2">
-                            <label className="text-xs font-bold uppercase text-[#1A2818]">
+                            <label className="text-xs font-bold uppercase text-brand-dark">
                                 Service Type
                             </label>
                             <div className="relative">
@@ -170,7 +171,7 @@ const ContactSection = ({ locations = [], selectedCity = '' }: Props) => {
                             )}
                         </div>
                         <div className="flex flex-col gap-2">
-                            <label className="text-xs font-bold uppercase text-[#1A2818]">
+                            <label className="text-xs font-bold uppercase text-brand-dark">
                                 Phone Number
                             </label>
                             <input
@@ -188,7 +189,7 @@ const ContactSection = ({ locations = [], selectedCity = '' }: Props) => {
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <label className="text-xs font-bold uppercase text-[#1A2818]">
+                        <label className="text-xs font-bold uppercase text-brand-dark">
                             Location
                         </label>
                         <div className="relative">
@@ -229,7 +230,7 @@ const ContactSection = ({ locations = [], selectedCity = '' }: Props) => {
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <label className="text-xs font-bold uppercase text-[#1A2818]">
+                        <label className="text-xs font-bold uppercase text-brand-dark">
                             Message
                         </label>
                         <textarea

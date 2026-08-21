@@ -69,6 +69,7 @@ const ContactSection = ({ locations, selectedCity = '' }: Props) => {
                         src="/images/private-office/cta-1.png"
                         alt="Contact us"
                         fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     {/* Gradient Overlay */}
@@ -114,7 +115,7 @@ const ContactSection = ({ locations, selectedCity = '' }: Props) => {
                     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-bold tracking-wider text-[#1A2818] uppercase">
+                                <label className="text-[10px] font-bold tracking-wider text-brand-dark uppercase">
                                     Name
                                 </label>
                                 <input
@@ -122,7 +123,7 @@ const ContactSection = ({ locations, selectedCity = '' }: Props) => {
                                     type="text"
                                     placeholder="Jane Smith"
                                     aria-label="Name"
-                                    className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-[#1A2818]/20 focus:border-[#1A2818]/30 outline-none text-sm placeholder:text-gray-400 ${
+                                    className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark/30 outline-none text-sm placeholder:text-gray-400 ${
                                         errors.name ? 'border-red-500' : 'border-none'
                                     }`}
                                 />
@@ -131,7 +132,7 @@ const ContactSection = ({ locations, selectedCity = '' }: Props) => {
                                 )}
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-bold tracking-wider text-[#1A2818] uppercase">
+                                <label className="text-[10px] font-bold tracking-wider text-brand-dark uppercase">
                                     Phone
                                 </label>
                                 <input
@@ -139,7 +140,7 @@ const ContactSection = ({ locations, selectedCity = '' }: Props) => {
                                     type="tel"
                                     placeholder="0123 456 789"
                                     aria-label="Phone Number"
-                                    className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-[#1A2818]/20 focus:border-[#1A2818]/30 outline-none text-sm placeholder:text-gray-400 ${
+                                    className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark/30 outline-none text-sm placeholder:text-gray-400 ${
                                         errors.phone ? 'border-red-500' : 'border-none'
                                     }`}
                                 />
@@ -150,7 +151,7 @@ const ContactSection = ({ locations, selectedCity = '' }: Props) => {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-[10px] font-bold tracking-wider text-[#1A2818] uppercase">
+                            <label className="text-[10px] font-bold tracking-wider text-brand-dark uppercase">
                                 Email
                             </label>
                             <input
@@ -158,7 +159,7 @@ const ContactSection = ({ locations, selectedCity = '' }: Props) => {
                                 type="email"
                                 placeholder="jane@framer.com"
                                 aria-label="Email Address"
-                                className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-[#1A2818]/20 focus:border-[#1A2818]/30 outline-none text-sm placeholder:text-gray-400 ${
+                                className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark/30 outline-none text-sm placeholder:text-gray-400 ${
                                     errors.email ? 'border-red-500' : 'border-none'
                                 }`}
                             />
@@ -169,14 +170,14 @@ const ContactSection = ({ locations, selectedCity = '' }: Props) => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-bold tracking-wider text-[#1A2818] uppercase">
+                                <label className="text-[10px] font-bold tracking-wider text-brand-dark uppercase">
                                     Space Type
                                 </label>
                                 <div className="relative">
                                     <select
                                         {...register('spaceType')}
                                         aria-label="Type of Space"
-                                        className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-[#1A2818]/20 focus:border-[#1A2818]/30 outline-none text-sm appearance-none text-gray-600 ${
+                                        className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark/30 outline-none text-sm appearance-none text-gray-600 ${
                                             errors.spaceType ? 'border-red-500' : 'border-none'
                                         }`}
                                     >
@@ -212,7 +213,7 @@ const ContactSection = ({ locations, selectedCity = '' }: Props) => {
                                 )}
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-bold tracking-wider text-[#1A2818] uppercase">
+                                <label className="text-[10px] font-bold tracking-wider text-brand-dark uppercase">
                                     Number of Seats
                                 </label>
                                 <input
@@ -220,7 +221,7 @@ const ContactSection = ({ locations, selectedCity = '' }: Props) => {
                                     type="number"
                                     placeholder="1"
                                     aria-label="Number of Seats"
-                                    className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-[#1A2818]/20 focus:border-[#1A2818]/30 outline-none text-sm placeholder:text-gray-400 ${
+                                    className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark/30 outline-none text-sm placeholder:text-gray-400 ${
                                         errors.numberOfSeats ? 'border-red-500' : 'border-none'
                                     }`}
                                 />
@@ -233,14 +234,14 @@ const ContactSection = ({ locations, selectedCity = '' }: Props) => {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-[10px] font-bold tracking-wider text-[#1A2818] uppercase">
+                            <label className="text-[10px] font-bold tracking-wider text-brand-dark uppercase">
                                 Location
                             </label>
                             <div className="relative">
                                 <select
                                     {...register('location')}
                                     aria-label="Select City"
-                                    className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-[#1A2818]/20 focus:border-[#1A2818]/30 outline-none text-sm appearance-none text-gray-600 ${
+                                    className={`w-full px-4 py-3 rounded-lg bg-white border focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark/30 outline-none text-sm appearance-none text-gray-600 ${
                                         errors.location ? 'border-red-500' : 'border-none'
                                     }`}
                                 >
@@ -275,7 +276,7 @@ const ContactSection = ({ locations, selectedCity = '' }: Props) => {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-[10px] font-bold tracking-wider text-[#1A2818] uppercase">
+                            <label className="text-[10px] font-bold tracking-wider text-brand-dark uppercase">
                                 Message
                             </label>
                             <textarea
@@ -283,14 +284,14 @@ const ContactSection = ({ locations, selectedCity = '' }: Props) => {
                                 rows={4}
                                 placeholder="Write your message"
                                 aria-label="Message"
-                                className="w-full px-4 py-3 rounded-lg bg-white border border-transparent focus:ring-2 focus:ring-[#1A2818]/20 focus:border-[#1A2818]/30 outline-none text-sm placeholder:text-gray-400 resize-none"
+                                className="w-full px-4 py-3 rounded-lg bg-white border border-transparent focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark/30 outline-none text-sm placeholder:text-gray-400 resize-none"
                             />
                         </div>
 
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="w-full bg-[#4d898b] hover:bg-[#3b6874] text-white font-medium py-3 rounded-lg transition-colors duration-200 shadow-sm mt-4 disabled:opacity-70 disabled:cursor-not-allowed"
+                            className="w-full bg-primary-400 hover:bg-primary-500 text-white font-medium py-3 rounded-lg transition-colors duration-200 shadow-sm mt-4 disabled:opacity-70 disabled:cursor-not-allowed"
                         >
                             {isSubmitting ? 'Submitting...' : 'Submit'}
                         </button>

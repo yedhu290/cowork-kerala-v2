@@ -15,46 +15,54 @@ import {
 } from 'lucide-react';
 
 const solutions = [
-    { icon: Globe, title: 'High Speed Internet' },
-    { icon: Armchair, title: 'Ergonomic Furniture' },
-    { icon: Building2, title: 'Fully Furnished Offices' },
-    { icon: Sofa, title: 'Lounge Areas' },
-    { icon: CupSoda, title: 'Snacks and Beverages' },
-    { icon: Printer, title: 'Printing and Scanning' },
+    { icon: Globe, title: 'High-speed internet' },
+    { icon: Armchair, title: 'Ergonomic furniture' },
+    { icon: Building2, title: 'Fully furnished offices' },
+    { icon: Sofa, title: 'Lounge areas' },
+    { icon: CupSoda, title: 'Snacks & beverages' },
+    { icon: Printer, title: 'Printing & scanning' },
     { icon: Lock, title: 'Lockers' },
     { icon: CircleParking, title: 'Parking' },
-    { icon: Clock, title: '24/7 Access' },
-    { icon: Dumbbell, title: 'Fitness Area' },
-    { icon: Zap, title: 'EV Charging' },
-    { icon: Snowflake, title: 'Air Conditioning' },
+    { icon: Clock, title: '24/7 access' },
+    { icon: Dumbbell, title: 'Fitness area' },
+    { icon: Zap, title: 'EV charging' },
+    { icon: Snowflake, title: 'Air conditioning' },
 ];
 
 const SolutionsSection = () => {
     return (
-        <section className="w-full bg-[#4d898b] py-16 px-6 md:px-[10%] text-center">
-            <div className="flex flex-col items-center gap-6 mb-16">
-                <span className="rounded-full bg-[#D4E7A6] px-6 py-2 text-xs font-bold uppercase tracking-wider text-[#1A2818]">
-                    Our Amenities
-                </span>
-                <h2 className="text-4xl md:text-6xl font-medium text-white">
-                    Seamless Work Solutions
-                </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-full mx-auto">
-                {solutions.map((item, index) => (
-                    <div
-                        key={index}
-                        className="flex items-center gap-6 bg-white/10 rounded-full p-4 backdrop-blur-sm max-w-2xl"
-                    >
-                        <div className="flex size-16 items-center justify-center rounded-full bg-white/30 text-white shrink-0 transition-colors">
-                            <item.icon size={26} strokeWidth={1.5} />
-                        </div>
-                        <span className="text-white font-medium text-left text-lg">
-                            {item.title}
+        <section className="w-full bg-primary-50 py-14 md:py-20">
+            <div className="container mx-auto px-4 md:px-8">
+                <div className="mx-auto mb-10 flex max-w-2xl flex-col items-center gap-4 text-center md:mb-14">
+                    <div className="flex items-center gap-3">
+                        <span className="h-px w-10 bg-primary-500" />
+                        <span className="text-xs font-bold uppercase tracking-[0.25em] text-primary-700">
+                            Amenities
                         </span>
+                        <span className="h-px w-10 bg-primary-500" />
                     </div>
-                ))}
+                    <h2 className="heading-section text-zinc-900">
+                        Everything included, nothing to arrange
+                    </h2>
+                    <p className="leading-relaxed text-zinc-600">
+                        Move in and start working — the essentials and the extras are all taken care
+                        of.
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 lg:grid-cols-4">
+                    {solutions.map((item) => (
+                        <div
+                            key={item.title}
+                            className="flex items-center gap-3 rounded-2xl border border-zinc-200 bg-white p-4 transition-colors hover:border-primary-300"
+                        >
+                            <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary-50 text-primary-700">
+                                <item.icon size={20} strokeWidth={1.5} />
+                            </span>
+                            <span className="text-sm font-medium text-zinc-800">{item.title}</span>
+                        </div>
+                    ))}
+                </div>
             </div>
         </section>
     );

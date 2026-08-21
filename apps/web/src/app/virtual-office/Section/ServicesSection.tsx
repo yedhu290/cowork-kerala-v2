@@ -40,8 +40,8 @@ const ServicesSection = () => {
                 <span className="text-xs font-bold uppercase tracking-widest text-zinc-600 mb-2 block bg-primary-50 w-fit text-center p-2 px-4 rounded-full">
                     Our Services
                 </span>
-                <h2 className="text-3xl md:text-5xl font-semibold text-zinc-900">
-                    Virtual Office Services
+                <h2 className="heading-subsection text-zinc-900">
+                    Ways to use your virtual office
                 </h2>
             </div>
 
@@ -65,7 +65,7 @@ const ServicesSection = () => {
                         <button
                             onClick={scrollToContact}
                             type="button"
-                            className="inline-block bg-[#D4E7A6] text-[#1A2818] text-xs font-bold px-3 py-1 rounded-full mb-8 cursor-pointer hover:bg-[#cbe095] transition-colors"
+                            className="inline-block bg-[#D4E7A6] text-brand-dark text-xs font-bold px-3 py-1 rounded-full mb-8 cursor-pointer hover:bg-[#cbe095] transition-colors"
                         >
                             {service.tag}
                         </button>
@@ -75,6 +75,7 @@ const ServicesSection = () => {
                                 src={service.image}
                                 alt={service.title}
                                 fill
+                                sizes="(max-width: 768px) 100vw, 33vw"
                                 className="object-cover transition-transform duration-500 group-hover:scale-110"
                             />
                         </div>

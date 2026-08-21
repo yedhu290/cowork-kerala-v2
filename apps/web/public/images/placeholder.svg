@@ -1,0 +1,31 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5f5f5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e8e8e8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg-gradient)"/>
+
+  <!-- Icon Container -->
+  <g transform="translate(400, 300)">
+    <!-- Desk -->
+    <rect x="-80" y="0" width="160" height="8" rx="2" fill="#c0c0c0"/>
+    <rect x="-70" y="8" width="10" height="40" rx="2" fill="#c0c0c0"/>
+    <rect x="60" y="8" width="10" height="40" rx="2" fill="#c0c0c0"/>
+
+    <!-- Chair -->
+    <circle cx="0" cy="-30" r="15" fill="#d0d0d0"/>
+    <rect x="-5" y="-15" width="10" height="30" rx="2" fill="#d0d0d0"/>
+    <rect x="-20" y="15" width="40" height="8" rx="2" fill="#d0d0d0"/>
+    <rect x="-15" y="23" width="10" height="25" rx="2" fill="#d0d0d0"/>
+    <rect x="5" y="23" width="10" height="25" rx="2" fill="#d0d0d0"/>
+  </g>
+
+  <!-- Text -->
+  <text x="400" y="480" font-family="Arial, sans-serif" font-size="24" fill="#999" text-anchor="middle">
+    Workspace Image
+  </text>
+</svg>

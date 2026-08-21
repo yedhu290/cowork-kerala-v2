@@ -57,14 +57,11 @@ const OverviewSection = ({ workspace }: OverviewSectionProps) => {
     return (
         <section className="grid gap-8 md:gap-28 md:grid-cols-8">
             <div className="md:col-span-5">
-                <nav className="mb-6 flex gap-6 text-gray-700">
-                    <button className="relative pb-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-primary-300">
+                <div className="mb-6 flex gap-6 text-gray-700">
+                    <span className="relative pb-1 font-medium after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-primary-300">
                         Overview
-                    </button>
-                    <button className="hover:opacity-80">Spaces</button>
-                    <button className="hover:opacity-80">Services</button>
-                    <button className="hover:opacity-80">Access</button>
-                </nav>
+                    </span>
+                </div>
 
                 <p className="text-gray-800">
                     {workspace.longDescription ||

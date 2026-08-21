@@ -46,7 +46,7 @@ const WhyChoose = () => {
         <section className="w-full py-8 md:py-12 lg:py-16">
             {/* Top Section - Why Choose */}
             <div className="text-center mb-12 md:mb-16 lg:mb-20">
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-6">
+                <h2 className="heading-section text-zinc-900 mb-4 md:mb-6">
                     Why Choose Cowork Kerala?
                 </h2>
                 <p className="text-xs sm:text-sm md:text-base text-gray-600 uppercase tracking-widest px-4 font-medium">
@@ -63,7 +63,7 @@ const WhyChoose = () => {
                             key={index}
                             className="flex flex-col items-center text-center p-6 md:p-8 rounded-3xl bg-white shadow-[0_2px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_2px_25px_rgba(0,0,0,0.08)] transition-shadow duration-300"
                         >
-                            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#EBFFD8]">
+                            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary-50">
                                 <IconComponent
                                     className="h-8 w-8 text-[#76A04E]"
                                     strokeWidth={1.5}

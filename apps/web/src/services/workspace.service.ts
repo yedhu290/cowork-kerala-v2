@@ -70,15 +70,18 @@ export interface WorkspaceResponse {
 export const getWorkspaces = async (params: GetWorkspacesParams = {}): Promise<WorkspacesResponse | null> => {
     try {
         const queryParams = new URLSearchParams();
+
         if (params.city) queryParams.append('city', params.city);
         if (params.page) queryParams.append('page', params.page.toString());
         if (params.limit) queryParams.append('limit', params.limit.toString());
         if (params.search) queryParams.append('search', params.search);
 
-        const url = `${API_BASE_URL}/spaces${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+        // Use the public, active-only endpoint. The admin `/spaces` listing now
+        // requires authentication and can return non-active spaces.
+        const url = `${API_BASE_URL}/spaces/public${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
 
         const response = await fetch(url, {
-            next: { revalidate: 60 }, // Revalidate every 60 seconds
+            next: { revalidate: 300 }, // Inventory: refresh every 5 minutes
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -98,7 +101,7 @@ export const getWorkspaces = async (params: GetWorkspacesParams = {}): Promise<W
 export const getWorkspaceById = async (id: string): Promise<WorkspaceResponse | null> => {
     try {
         const response = await fetch(`${API_BASE_URL}/spaces/${id}`, {
-            next: { revalidate: 60 }, // Revalidate every 60 seconds
+            next: { revalidate: 300 }, // Inventory: refresh every 5 minutes
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -118,7 +121,7 @@ export const getWorkspaceById = async (id: string): Promise<WorkspaceResponse | 
 export const getFeaturedWorkspaces = async (): Promise<WorkspacesResponse | null> => {
     try {
         const response = await fetch(`${API_BASE_URL}/spaces/featured`, {
-            next: { revalidate: 60 }, // Revalidate every 60 seconds
+            next: { revalidate: 300 }, // Inventory: refresh every 5 minutes
             headers: {
                 'Content-Type': 'application/json',
             },

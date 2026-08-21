@@ -24,7 +24,7 @@ const TrustedCompaniesSection = () => {
                 <span className="rounded-full bg-[#D4E7A6] px-3 py-1 text-xs font-semibold uppercase tracking-wider text-zinc-900">
                     Companies
                 </span>
-                <h2 className="text-4xl font-semibold text-zinc-900 md:text-5xl">
+                <h2 className="heading-subsection text-zinc-900">
                     Trusted by the leading companies{' '}
                 </h2>
                 <p className="max-w-2xl text-zinc-600 leading-relaxed">
@@ -50,10 +50,10 @@ const TrustedCompaniesSection = () => {
 
             <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-[#1A2818] px-6 py-3 text-white transition-transform hover:scale-105"
+                className="inline-flex items-center gap-2 rounded-full bg-brand-dark px-6 py-3 text-white transition-transform hover:scale-105"
             >
                 <span>Contact us</span>
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-[#1A2818]">
+                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-brand-dark">
                     <Mail size={14} />
                 </div>
             </Link>

@@ -1,25 +1,39 @@
 import React from 'react';
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { DEFAULT_OG_IMAGE } from '@/lib/seo';
 import HeroSection from '../Section/HeroSection';
 import WorkspaceListing from '../Section/WorkspaceListing';
 import FilterSection from '../Section/FilterSection';
-import Header from '@/components/ui/Header';
+import Header from '@/components/ui/HeaderServer';
 import Footer from '@/components/ui/Footer';
 import Fixedw from '@/components/ui/Fixedw';
-import { getLocations } from '@/services/locations';
+import Breadcrumbs from '@/components/ui/Breadcrumbs';
+import CitySeoContent from '@/components/seo/CitySeoContent';
+import { getCityServiceContent } from '@/lib/cityContent';
+import { getLocations, isKnownCity } from '@/services/locations';
 import { getWorkspaces } from '@/services/workspace.service';
 
 type Props = {
     params: Promise<{ city: string }>;
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { city } = await params;
+
+    // Unknown city slugs 404 (avoids a soft 404 with generic fallback content).
+    // Checked here too so the 404 status commits before the page renders a 200.
+    if (!(await isKnownCity(city))) {
+        notFound();
+    }
+
     // Capitalize the city name for display
     const displayCity = city.charAt(0).toUpperCase() + city.slice(1);
 
-    const title = `Coworking Spaces in ${displayCity} | CoWork Kerala`;
-    const description = `Discover the best coworking spaces in ${displayCity}. Flexible desks, private offices, and meeting rooms available.`;
+    const content = getCityServiceContent(city, 'coworking-space', displayCity);
+    const title = content.metaTitle;
+    const description = content.metaDescription;
 
     return {
         title,
@@ -27,32 +41,93 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         openGraph: {
             title,
             description,
+            type: 'website',
+            locale: 'en_IN',
+            siteName: 'CoWork Kerala',
+            images: [DEFAULT_OG_IMAGE],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
+            images: [DEFAULT_OG_IMAGE],
+        },
+        alternates: {
+            canonical: `/coworking-space/${city.toLowerCase()}`,
         },
     };
 }
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export async function generateStaticParams() {
+    const locations = await getLocations();
+    return locations.map((location) => ({ city: location.name.toLowerCase() }));
+}
 
-const CityWorkspacePage = async ({ params }: Props) => {
+// ISR: refresh workspace inventory every 5 minutes
+export const revalidate = 300;
+
+const CityWorkspacePage = async ({ params, searchParams }: Props) => {
     const { city } = await params;
+
+    if (!(await isKnownCity(city))) {
+        notFound();
+    }
+
+    const searchParamsData = await searchParams;
+
     // Capitalize the city name for the API call
     const cityStr = city.charAt(0).toUpperCase() + city.slice(1);
 
+    const page =
+        typeof searchParamsData.page === 'string' ? parseInt(searchParamsData.page, 10) : 1;
+    const search =
+        typeof searchParamsData.search === 'string' ? searchParamsData.search : undefined;
+
     const [locations, workspacesResponse] = await Promise.all([
         getLocations(),
-        getWorkspaces({ city: cityStr }),
+        getWorkspaces({ city: cityStr, page, limit: 9, search }),
     ]);
 
     const workspaces = workspacesResponse?.data || [];
+    const pagination = workspacesResponse?.pagination;
 
     return (
-        <Fixedw className="container mx-auto md:px-8 flex flex-col gap-12">
-            <Header />
-            <HeroSection currentCity={city} />
-            <FilterSection locations={locations} currentCity={city} />
-            <WorkspaceListing workspaces={workspaces} locations={locations} />
+        <>
+            <Fixedw className="container mx-auto md:px-8 flex flex-col gap-12 mb-12 md:mb-24">
+                <Header />
+                <main className="flex flex-col gap-12">
+                    <Breadcrumbs
+                        items={[
+                            { name: 'Home', url: '/' },
+                            { name: 'Coworking Spaces', url: '/coworking-space' },
+                            { name: cityStr, url: `/coworking-space/${city.toLowerCase()}` },
+                        ]}
+                    />
+                    <HeroSection
+                        currentCity={city}
+                        as={city === 'trivandrum' ? 'h3' : 'h1'}
+                        headingClassName="text-3xl md:text-4xl font-medium leading-tight lg:w-72"
+                    />
+                    <FilterSection locations={locations} currentCity={city} />
+                    <section className="flex flex-col gap-8">
+                        <h2 className="heading-subsection text-zinc-900">
+                            Available coworking spaces in {cityStr}
+                        </h2>
+                        <WorkspaceListing
+                            workspaces={workspaces}
+                            locations={locations}
+                            pagination={pagination}
+                        />
+                    </section>
+                    <CitySeoContent
+                        citySlug={city}
+                        service="coworking-space"
+                        displayName={cityStr}
+                    />
+                </main>
+            </Fixedw>
             <Footer />
-        </Fixedw>
+        </>
     );
 };
 
