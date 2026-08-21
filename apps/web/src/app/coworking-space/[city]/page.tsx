@@ -58,13 +58,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 }
 
-export async function generateStaticParams() {
-    const locations = await getLocations();
-    return locations.map((location) => ({ city: location.name.toLowerCase() }));
-}
-
-// ISR: refresh workspace inventory every 5 minutes
-export const revalidate = 300;
+// Rendered on demand, not prerendered: this page reads `searchParams` for the
+// listing's page/search state, which a statically generated page cannot do.
+// Pairing it with generateStaticParams made Next choose static rendering
+// whenever the locations API returned nothing at build time, and the
+// searchParams access then threw DYNAMIC_SERVER_USAGE — a 500 on every city
+// page instead of the intended fallback content.
+// Freshness still comes from the per-fetch revalidate in the services layer.
+export const dynamic = 'force-dynamic';
 
 const CityWorkspacePage = async ({ params, searchParams }: Props) => {
     const { city } = await params;
