@@ -63,6 +63,9 @@ app.get("/api-docs.json", (_req: Request, res: Response) => {
 });
 
 // API Routes
+// Everything is mounted under /api/v1, so NEXT_PUBLIC_API_URL in the web app
+// must include that prefix (e.g. https://api.coworkkerala.com/api/v1) - the
+// services append paths like /spaces/public directly to it.
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/settings", settingsRoutes);
 app.use("/api/v1/upload", uploadRoutes);
