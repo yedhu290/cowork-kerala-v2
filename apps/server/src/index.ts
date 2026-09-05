@@ -38,6 +38,12 @@ app.get("/health", (_req: Request, res: Response) => {
         success: true,
         message: "Server is running",
         timestamp: new Date().toISOString(),
+        // Identifies which deployment answered - the same image runs behind
+        // both api.coworkkerala.com and dev-api.coworkkerala.com, so without
+        // this there is no way to tell them apart when debugging.
+        service: "cowork-backend",
+        environment: process.env.NODE_ENV || "unknown",
+        commit: process.env.SOURCE_COMMIT || null,
     });
 });
 
