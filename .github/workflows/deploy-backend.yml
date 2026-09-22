@@ -1,0 +1,118 @@
+name: Deploy backend
+
+# Builds apps/server and rolls it out to the Docker Swarm service on the
+# droplet. The image is built here rather than on the server: the droplet has
+# 1 GB of RAM and is serving production, so a build there risks the running
+# containers.
+#
+#   dev  -> cowork-backend-nrthy4  (dev-api.coworkkerala.com)
+#   main -> cowork-backend-bq9dwb  (api.coworkkerala.com)
+#
+# Required repository secrets:
+#   DROPLET_HOST      droplet IP
+#   DROPLET_USER      SSH user (member of the docker group)
+#   DROPLET_SSH_KEY   that user's private key
+#
+# One-time on the droplet, so Swarm can pull the image now and on restart:
+#   echo <PAT-with-read:packages> | docker login ghcr.io -u <github-user> --password-stdin
+
+on:
+  push:
+    branches: [main, dev]
+    paths:
+      - 'apps/server/**'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-backend-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Resolve target for this branch
+        id: target
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "service=cowork-backend-bq9dwb" >> "$GITHUB_OUTPUT"
+            echo "url=https://api.coworkkerala.com/health" >> "$GITHUB_OUTPUT"
+          else
+            echo "service=cowork-backend-nrthy4" >> "$GITHUB_OUTPUT"
+            echo "url=https://dev-api.coworkkerala.com/health" >> "$GITHUB_OUTPUT"
+          fi
+          echo "image=ghcr.io/${{ github.repository_owner }}/cowork-backend" >> "$GITHUB_OUTPUT"
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./apps/server
+          push: true
+          tags: |
+            ${{ steps.target.outputs.image }}:${{ github.sha }}
+            ${{ steps.target.outputs.image }}:${{ github.ref_name }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Roll out to the droplet
+        env:
+          SSH_KEY: ${{ secrets.DROPLET_SSH_KEY }}
+          HOST: ${{ secrets.DROPLET_HOST }}
+          USER_NAME: ${{ secrets.DROPLET_USER }}
+          SERVICE: ${{ steps.target.outputs.service }}
+          IMAGE: ${{ steps.target.outputs.image }}:${{ github.sha }}
+        run: |
+          install -m 600 /dev/null key
+          echo "$SSH_KEY" > key
+          # start-first brings the new task up and waits for its healthcheck
+          # before stopping the old one, so the API stays answering throughout.
+          # SOURCE_COMMIT is what /health reports back, so the verify step below
+          # can prove the new code is serving rather than just that a rollout
+          # was accepted. --env-add updates this one variable and leaves the
+          # other 23 on the service untouched.
+          ssh -o StrictHostKeyChecking=accept-new -i key "$USER_NAME@$HOST" \
+            "docker service update \
+               --image '$IMAGE' \
+               --env-add 'SOURCE_COMMIT=${{ github.sha }}' \
+               --with-registry-auth \
+               --update-order start-first \
+               --update-failure-action rollback \
+               --detach=false \
+               '$SERVICE'"
+          rm -f key
+
+      - name: Verify the new code is live
+        env:
+          URL: ${{ steps.target.outputs.url }}
+        run: |
+          for i in $(seq 1 20); do
+            body=$(curl -fsS --max-time 10 "$URL" 2>/dev/null || true)
+            code=$(printf '%s' "$body" | sed -n 's/.*"commit":"\([^"]*\)".*/\1/p')
+            if [ "$code" = "${{ github.sha }}" ]; then
+              echo "Live on ${{ github.sha }}"
+              exit 0
+            fi
+            echo "attempt $i - /health has not reported this commit yet"
+            sleep 15
+          done
+          echo "Rolled out, but /health never reported commit ${{ github.sha }}."
+          echo "Swarm may have rolled back - check: docker service ps $SERVICE"
+          exit 1

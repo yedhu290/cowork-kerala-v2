@@ -38,6 +38,12 @@ app.get("/health", (_req: Request, res: Response) => {
         success: true,
         message: "Server is running",
         timestamp: new Date().toISOString(),
+        // Identifies which deployment answered - the same image runs behind
+        // both api.coworkkerala.com and dev-api.coworkkerala.com, so without
+        // this there is no way to tell them apart when debugging.
+        service: "cowork-backend",
+        environment: process.env.NODE_ENV || "unknown",
+        commit: process.env.SOURCE_COMMIT || null,
     });
 });
 
@@ -63,6 +69,9 @@ app.get("/api-docs.json", (_req: Request, res: Response) => {
 });
 
 // API Routes
+// Everything is mounted under /api/v1, so NEXT_PUBLIC_API_URL in the web app
+// must include that prefix (e.g. https://api.coworkkerala.com/api/v1) - the
+// services append paths like /spaces/public directly to it.
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/settings", settingsRoutes);
 app.use("/api/v1/upload", uploadRoutes);
