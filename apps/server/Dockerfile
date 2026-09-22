@@ -10,6 +10,12 @@ RUN bun install --frozen-lockfile
 
 # --- build ---
 FROM base AS build
+# Bun's bundler inlines process.env.NODE_ENV at build time, so this has to be
+# set here and not only in the runner stage. Without it the bundle hard-codes
+# "development", config.nodeEnv is wrong at runtime no matter what the
+# container environment says, and the error middleware returns internal error
+# messages to clients in production.
+ENV NODE_ENV=production
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN bun build src/index.ts --outdir ./dist --target bun
