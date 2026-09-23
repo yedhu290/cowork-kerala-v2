@@ -10,10 +10,10 @@ export const authConfig = {
       const isOnAdmin = nextUrl.pathname.startsWith('/admin');
       const isOnLogin = nextUrl.pathname.startsWith('/admin/login');
 
-      // Allow access to public static files and the NextAuth API route itself
+      // Allow public static files. The NextAuth routes live at /api/auth,
+      // outside the /admin matcher, so they are never gated by this callback.
       if (
         nextUrl.pathname.startsWith('/_next') ||
-        nextUrl.pathname.startsWith('/admin/api') ||
         nextUrl.pathname.startsWith('/static')
       ) {
         return true;
