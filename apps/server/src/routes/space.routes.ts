@@ -154,7 +154,9 @@ router.get(
  */
 router.get(
     '/',
-    // authenticate,
+    // Intentionally public. This returns active spaces only - the same set as
+    // /spaces/public - so there is nothing here that is not already on the
+    // website. The admin dashboard calls it with a token for its own listing.
     validate(getSpacesQuerySchema),
     spaceController.getAll.bind(spaceController)
 );
@@ -189,7 +191,8 @@ router.get(
  */
 router.get(
     '/featured',
-    // authenticate, // Optional: Decide if authentication is required for featured spaces
+    // Intentionally public: the marketing homepage renders these via
+    // getFeaturedWorkspaces(). Requiring auth here would empty the homepage.
     spaceController.getFeatured.bind(spaceController)
 );
 
@@ -230,7 +233,8 @@ router.get(
  */
 router.get(
     '/:id',
-    // authenticate,
+    // Intentionally public: /coworking-space/details/[id] renders these via
+    // getWorkspaceById(). Requiring auth here would break every detail page.
     validate(getSpaceByIdSchema),
     spaceController.getById.bind(spaceController)
 );

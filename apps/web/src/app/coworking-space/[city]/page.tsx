@@ -22,10 +22,20 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { city } = await params;
 
-    // Unknown city slugs 404 (avoids a soft 404 with generic fallback content).
-    // Checked here too so the 404 status commits before the page renders a 200.
+    // This route reads searchParams for the listing's page/search state, so it
+    // always renders dynamically and cannot return a real 404 - notFound()
+    // cannot set the status once the response has begun streaming. The sibling
+    // /virtual-office and /private-office routes use dynamicParams = false for
+    // that, which is not available here.
+    //
+    // So unknown slugs are marked noindex instead. The page still renders the
+    // not-found view for people; this stops search engines indexing arbitrary
+    // /coworking-space/<anything> URLs as thin duplicates.
     if (!(await isKnownCity(city))) {
-        notFound();
+        return {
+            title: 'Page not found | CoWork Kerala',
+            robots: { index: false, follow: false },
+        };
     }
 
     // Capitalize the city name for display

@@ -11,7 +11,7 @@ import HeroSection from '../Section/HeroSection';
 import ContactSection from '../Section/ContactSection';
 import GallerySection from '../Section/GallerySection';
 import { getCityServiceContent } from '@/lib/cityContent';
-import { getLocations, isKnownCity } from '@/services/locations';
+import { getLocations, isKnownCity, getCityParamSlugs } from '@/services/locations';
 
 type Props = {
     params: Promise<{ city: string }>;
@@ -64,11 +64,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-    const locations = await getLocations();
-    return locations.map((location) => ({ city: location.name.toLowerCase() }));
+    const slugs = await getCityParamSlugs();
+    return slugs.map((city) => ({ city }));
 }
 
 // ISR: marketing content refreshes hourly
+// Only the cities returned by generateStaticParams exist. Anything else gets
+// a real 404 from the routing layer, before rendering begins - notFound() from
+// inside the component cannot set the status once the response has started
+// streaming, which is what produced soft 404s (200 with not-found content).
+export const dynamicParams = false;
+
 export const revalidate = 3600;
 
 const CityPrivateOfficePage = async ({ params }: Props) => {
