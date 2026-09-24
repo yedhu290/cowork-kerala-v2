@@ -64,13 +64,20 @@ export const isKnownCity = async (citySlug: string): Promise<boolean> => {
 /**
  * City slugs to prerender, for the [city] routes that set `dynamicParams = false`.
  *
- * Those routes return a real 404 for any slug not in this list, so the list must
- * never come back empty just because the API was unreachable during a build -
- * that would 404 every city page at once. The bundled CITY_DISPLAY slugs are
- * merged in as a floor, and the API can only add to them.
+ * The API is the source of truth: it lists the cities that actually have
+ * locations. CITY_DISPLAY is only a fallback for when the API is unreachable
+ * during a build - without it an empty list would 404 every city page at once.
+ *
+ * It is deliberately a fallback rather than a union. CITY_DISPLAY contains
+ * cities that may have no location in the database (thrissur, at the time of
+ * writing). Merging the two prerendered those pages, and isKnownCity() then
+ * rejected them at render time - producing the not-found view under a 200,
+ * which is the soft 404 this was meant to remove.
  */
 export const getCityParamSlugs = async (): Promise<string[]> => {
     const locations = await getLocations();
-    const fromApi = locations.map((loc) => loc.name.toLowerCase());
-    return Array.from(new Set([...Object.keys(CITY_DISPLAY), ...fromApi]));
+    if (locations.length > 0) {
+        return locations.map((loc) => loc.name.toLowerCase());
+    }
+    return Object.keys(CITY_DISPLAY);
 };
