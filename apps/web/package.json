@@ -7,9 +7,10 @@
     "dev": "next dev --turbopack -p 3000",
     "build": "next build",
     "start": "next start -p 3000",
-    "lint": "next lint",
+    "lint": "eslint src",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "lint:fix": "eslint src --fix"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
