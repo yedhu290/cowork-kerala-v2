@@ -1,3 +1,4 @@
+import { CITY_DISPLAY } from '@/lib/cityLocation';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8091/api/v1';
 
 export interface Location {
@@ -58,4 +59,18 @@ export const isKnownCity = async (citySlug: string): Promise<boolean> => {
     if (locations.length === 0) return true;
     const slug = citySlug.toLowerCase();
     return locations.some((loc) => loc.name.toLowerCase() === slug);
+};
+
+/**
+ * City slugs to prerender, for the [city] routes that set `dynamicParams = false`.
+ *
+ * Those routes return a real 404 for any slug not in this list, so the list must
+ * never come back empty just because the API was unreachable during a build -
+ * that would 404 every city page at once. The bundled CITY_DISPLAY slugs are
+ * merged in as a floor, and the API can only add to them.
+ */
+export const getCityParamSlugs = async (): Promise<string[]> => {
+    const locations = await getLocations();
+    const fromApi = locations.map((loc) => loc.name.toLowerCase());
+    return Array.from(new Set([...Object.keys(CITY_DISPLAY), ...fromApi]));
 };
